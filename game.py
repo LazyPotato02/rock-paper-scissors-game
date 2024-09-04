@@ -1,6 +1,19 @@
 import pygame
 import sys
 import random
+import os
+
+def resource_path(relative_path):
+    """ Get the absolute path to the resource, works for development and PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores the path in `sys._MEIPASS`
+        base_path = sys._MEIPASS
+    except AttributeError:
+        # In development mode, `sys._MEIPASS` does not exist
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 
 # Initialize Pygame
 pygame.init()
@@ -10,15 +23,16 @@ screen_width, screen_height = 800, 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Rock Paper Scissors")
 
-rock_img = pygame.image.load("rock.png")
-paper_img = pygame.image.load("paper.png")
-scissors_img = pygame.image.load("scissors.png")
+rock_image = pygame.image.load(resource_path('rock.png'))
+paper_image = pygame.image.load(resource_path('paper.png'))
+scissors_image = pygame.image.load(resource_path('scissors.png'))
+
 
 # Resize images if necessary
 button_size = (150, 150)
-rock_img = pygame.transform.scale(rock_img, button_size)
-paper_img = pygame.transform.scale(paper_img, button_size)
-scissors_img = pygame.transform.scale(scissors_img, button_size)
+rock_img = pygame.transform.scale(rock_image, button_size)
+paper_img = pygame.transform.scale(paper_image, button_size)
+scissors_img = pygame.transform.scale(scissors_image, button_size)
 
 # Set positions for images at the bottom of the screen
 padding = 50
